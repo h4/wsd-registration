@@ -1,0 +1,22 @@
+{
+  "name": "wsd-registration",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/h4/wsd-registration.git"
+  },
+  "author": "Mikhail Baranov <mikhail.baranov@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/h4/wsd-registration/issues"
+  },
+  "homepage": "https://github.com/h4/wsd-registration",
+  "dependencies": {
+    "edit-google-spreadsheet": "^0.2.6"
+  }
+}
