@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/h4/wsd-registration",
   "dependencies": {
-    "edit-google-spreadsheet": "^0.2.6"
+    "edit-google-spreadsheet": "^0.2.6",
+    "node-schedule": "^0.1.13"
   }
 }

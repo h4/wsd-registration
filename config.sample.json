@@ -1,0 +1,10 @@
+{
+    "debug": true,
+    "spreadsheetId": "SPREADSHEET_ID",
+    "worksheetId": "WORKSHEET_ID",
+
+    "oauth": {
+        "email": "OAUTH_EMAIL@developer.gserviceaccount.com",
+        "keyFile": "PATH_TO_PEM_FILE"
+    }
+}
