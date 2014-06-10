@@ -1,11 +1,13 @@
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
+var qs = require('querystring');
 var schedule = require('node-schedule');
 var config = require('./lib/config');
 var loader = require('./lib/loader');
+var indexView = require('./views/index');
+var registrationView = require('./views/registration');
 
-var resultsFile = path.resolve(__dirname, './results');
 var server = http.createServer();
 
 var job = schedule.scheduleJob("0-59 * * * *", function() {
@@ -18,22 +20,26 @@ server.on('request', function(req, res) {
         return;
     }
 
-    res.writeHead(200, {
-        'access-control-allow-origin': '*',
-        'content-type': 'application/json'
-    });
+    switch (req.url) {
+        case '/favicon.ico':
+            return;
+            break;
+        case '/':
+            indexView(res);
+            break;
+        case '/registration/':
+            if (req.method === 'POST') {
+                var body = '';
+                req.on('data', function(data) {
+                    body += data;
+                });
 
-    fs.readFile(resultsFile, {encoding: 'utf-8'}, function(err, data) {
-        if (err) {
-            throw err;
-        }
-
-        var dataObj = {
-            registered: data
-        };
-
-        res.end(JSON.stringify(dataObj));
-    })
+                req.on('end', function() {
+                    registrationView(res, config, qs.parse(body));
+                })
+            }
+            break;
+    }
 });
 
 server.listen(config.port || 8000, function() {
