@@ -19,7 +19,8 @@ var job = schedule.scheduleJob("0-59 * * * *", function() {
 
 winston.add(winston.transports.File, { filename: 'logs/registration.log' });
 winston.add(Mail, {
-    to: "Mikhail Baranov <dev@brnv.ru>"
+    to: "Mikhail Baranov <dev@brnv.ru>",
+    from: "robot@webstandardsdays.ru"
 });
 winston.remove(winston.transports.Console);
 
