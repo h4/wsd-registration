@@ -35,7 +35,11 @@ server.on('request', function(req, res) {
                 });
 
                 req.on('end', function() {
-                    registrationView(res, config, qs.parse(body));
+                    registrationView(res, config, qs.parse(body), function(err) {
+                        if (err) {
+                            errorView(res, 500, 'Server error');
+                        }
+                    });
                 })
             } else {
                 errorView(res, 400, 'Bad request');

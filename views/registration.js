@@ -13,8 +13,9 @@ var Spreadsheet = require('edit-google-spreadsheet');
  * @param {String} postData.email
  * @param {String} postData.twitter
  * @param {String} postData.additional
+ * @param {Function} callback
  */
-function registrationView(res, config, postData) {
+function registrationView(res, config, postData, callback) {
     res.writeHead(200, {
         'access-control-allow-origin': '*',
         'content-type': 'application/json'
@@ -24,12 +25,14 @@ function registrationView(res, config, postData) {
 
     Spreadsheet.load(config, function sheetReady(err, spreadsheet) {
         if (err) {
-            throw err;
+            callback(err);
+            return;
         }
 
-        spreadsheet.receive(function(err, rows, info) {
+        spreadsheet.receive(function (err, rows, info) {
             if (err) {
-                throw err;
+                callback(err);
+                return;
             }
 
             var addedObj = {};
@@ -44,9 +47,10 @@ function registrationView(res, config, postData) {
             addedObj[info.nextRow] = [rowData];
             spreadsheet.add(addedObj);
 
-            spreadsheet.send(function(err) {
+            spreadsheet.send(function (err) {
                 if (err) {
-                    throw err;
+                    callback(err);
+                    return;
                 }
                 var dataObj = {
                     result: "success"
