@@ -3,6 +3,17 @@ var fs = require('fs');
 var path = require('path');
 var Spreadsheet = require('edit-google-spreadsheet');
 
+/**
+ *
+ * @param res
+ * @param config
+ * @param {Object} postData Данные из формы
+ * @param {String} postData.spreadsheetid
+ * @param {String} postData.name
+ * @param {String} postData.email
+ * @param {String} postData.twitter
+ * @param {String} postData.additional
+ */
 function registrationView(res, config, postData) {
     res.writeHead(200, {
         'access-control-allow-origin': '*',
@@ -17,6 +28,10 @@ function registrationView(res, config, postData) {
         }
 
         spreadsheet.receive(function(err, rows, info) {
+            if (err) {
+                throw err;
+            }
+
             var addedObj = {};
             var dateTime = new Date();
             var rowData = [
