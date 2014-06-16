@@ -18,6 +18,8 @@
   "homepage": "https://github.com/h4/wsd-registration",
   "dependencies": {
     "edit-google-spreadsheet": "^0.2.6",
-    "node-schedule": "^0.1.13"
+    "node-schedule": "^0.1.13",
+    "winston": "^0.7.3",
+    "winston-mail": "^0.2.7"
   }
 }

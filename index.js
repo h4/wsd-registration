@@ -3,6 +3,8 @@ var fs = require('fs');
 var path = require('path');
 var qs = require('querystring');
 var schedule = require('node-schedule');
+var winston = require('winston');
+var Mail = require('winston-mail').Mail;
 var config = require('./lib/config');
 var loader = require('./lib/loader');
 var indexView = require('./views/index');
@@ -14,6 +16,12 @@ var server = http.createServer();
 var job = schedule.scheduleJob("0-59 * * * *", function() {
     loader.load(config);
 });
+
+winston.add(winston.transports.File, { filename: 'logs/registration.log' });
+winston.add(Mail, {
+    to: "Mikhail Baranov <dev@brnv.ru>"
+});
+winston.remove(winston.transports.Console);
 
 server.on('request', function(req, res) {
     if (req.url === '/favicon.ico') {
@@ -37,11 +45,13 @@ server.on('request', function(req, res) {
                 req.on('end', function() {
                     registrationView(res, config, qs.parse(body), function(err) {
                         if (err) {
+                            winston.error(err.message);
                             errorView(res, 500, 'Server error');
                         }
                     });
                 })
             } else {
+                winston.info('Bad registration');
                 errorView(res, 400, 'Bad request');
             }
             break;
