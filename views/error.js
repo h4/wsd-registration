@@ -2,8 +2,8 @@
 
 function errorView(res, code, message) {
     res.writeHead(code, {
-        'access-control-allow-origin': '*',
-        'content-type': 'application/json'
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
     });
 
     var dataObj = {

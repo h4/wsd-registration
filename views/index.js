@@ -5,8 +5,8 @@ var resultsFile = path.resolve(__dirname, '../results');
 
 function indexView(res) {
     res.writeHead(200, {
-        'access-control-allow-origin': '*',
-        'content-type': 'application/json'
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
     });
 
     fs.readFile(resultsFile, {encoding: 'utf-8'}, function(err, data) {
