@@ -7,11 +7,11 @@ var config = require('./lib/config');
 var loader = require('./lib/loader');
 var indexView = require('./views/index');
 var registrationView = require('./views/registration');
+var errorView = require('./views/error');
 
 var server = http.createServer();
 
 var job = schedule.scheduleJob("0-59 * * * *", function() {
-    console.log('Scheduled job');
     loader.load(config);
 });
 
@@ -37,11 +37,13 @@ server.on('request', function(req, res) {
                 req.on('end', function() {
                     registrationView(res, config, qs.parse(body));
                 })
+            } else {
+                errorView(res, 400, 'Bad request');
             }
             break;
     }
 });
 
-server.listen(config.port || 8000, function() {
+server.listen(config.port || 8000, function(err) {
     console.log("Server started at " + new Date(), "Server started");
 });
